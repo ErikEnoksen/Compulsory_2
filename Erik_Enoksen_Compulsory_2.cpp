@@ -10,23 +10,30 @@ long factorial(int n) {
         else
         return 1;
 }
-    void dofactorial(){    
-        cout<<"Enter a positive integer\n";
-        int num;
-         cin >> num;
-    
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-    
-        cout << num << "! = " <<factorial(num) <<'\n';
+void dofactorial() {
+    cout << "Enter a positive integer\n";
+    int num;
+    cin >> num;
 
-
+    if (cin.fail() || num < 0) {
+        cout << "Invalid input. Please enter a positive integer.\n";
+        cin.clear();
+        cin.ignore();
+        return;
     }
 
-void printPolynomial(double* poly){
-    for (int i = 3; i>=0; i--){
+    cin.ignore(); 
+
+    cout << num << "! = " << factorial(num) << '\n';
+}
+
+
+void printPolynomial(double* poly, int degree){
+    
+
+    for (int i = degree; i>=0; i--){
         if (poly[i] !=0.0){
-            if (i != 3){
+            if (i != degree){
              if (poly[i]>0.0) cout << " + ";
              else cout <<  " - ";
             }
@@ -37,28 +44,28 @@ void printPolynomial(double* poly){
     cout <<endl;
 }
 
-void addPolynomials(double* poly1, double* poly2){
-    for (int i = 0; i <= 3; i++){
+void addPolynomials(double* poly1, double* poly2, int degree){
+    for (int i = 0; i <= degree; i++){
         poly1[i] += poly2[i];
     }
 }
 
-void subtractPolynomials(double* poly1, double* poly2){
-    for (int i = 0; i <= 3; i++){
+void subtractPolynomials(double* poly1, double* poly2,int degree){
+    for (int i = 0; i <= degree; i++){
         poly1[i] -= poly2[i];
     }
 }
 
-void multiplyPolynomials(double* poly1, double* poly2){
-    double result[2 * 3 + 1] = {0.0};
+void multiplyPolynomials(double* poly1, double* poly2, int degree){
+    double result[2* 3 +1] = {0.0};
 
-    for (int i = 0; i <= 3; i++){
-        for (int j = 0; j <= 3; j++){
+    for (int i = 0; i <= degree; i++){
+        for (int j = 0; j <= degree; j++){
             result[i + j] += poly1[i] * poly2[j];
         }
     }
 
-    for (int i = 0; i <= 2 * 3; i++){
+    for (int i = 0; i <= 2 * degree; i++){
         poly1[i] = result[i];
     }
 }
@@ -72,16 +79,22 @@ void polynomMenu(){
 
     int choice;
     cin>> choice;
-        
-   double poly1[3];
-   double poly2[3];
+    if(!cin){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            polynomMenu();
+    }
+
+   int degree = 3;
+   double poly1[degree + 1];
+   double poly2[degree + 1];
 
     cout <<"Enter coefficients of the first polynomial (from highest degree to constant term): ";
-        for (int i = 3; i >= 0; i-- ){
+        for (int i = degree; i >= 0; i-- ){
             cin>> poly1[i];
         }
     cout <<"Enter cofficients of the second polynomial (from highest degree to constant term)";
-        for (int i = 3; i >= 0; i--){
+        for (int i = degree; i >= 0; i--){
             cin >> poly2[i];
         }
     switch(choice){
@@ -89,18 +102,20 @@ void polynomMenu(){
       while(true){
         
         case 1:
-            addPolynomials(poly1, poly2);
+            addPolynomials(poly1, poly2, degree);
             cout <<"Result of additon: ";
-            printPolynomial(poly1);
+            printPolynomial(poly1, degree);
             break;
         case 2:
-            subtractPolynomials(poly1, poly2);
+            subtractPolynomials(poly1, poly2, degree);
             cout <<"Result of subtraction: ";
-            printPolynomial(poly1);
+            printPolynomial(poly1, degree);
             break;
         case 3:
-            multiplyPolynomials(poly1, poly2);
-            cout <<"Result of subtraction: ";
+            multiplyPolynomials(poly1, poly2, degree);
+            cout <<"Result of multiplication: ";
+            printPolynomial(poly1, degree);
+            break;
         default:
         cout <<"No sorry that wasnt one of your options try again!\n"; 
         cin.clear();
