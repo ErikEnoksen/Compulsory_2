@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//This is doing Factorial using Reccursion
 long factorial(int n) {                                                                    
 
         if (n <= 1)
@@ -27,36 +28,41 @@ void dofactorial() {
     cout << num << "! = " << factorial(num) << '\n';
 }
 
-
 void printPolynomial(double* poly, int degree){
-    
 
-    for (int i = degree; i>=0; i--){
-        if (poly[i] !=0.0){
+    for (int i = degree; i >=0; i--){
+        if (poly[i] !=0.0) {
             if (i != degree){
-             if (poly[i]>0.0) cout << " + ";
-             else cout <<  " - ";
+             if (poly[i] > 0.0) 
+             cout << " + ";
+             else 
+             cout <<  " - ";
             }
-            if (i != 0) cout << poly[i] << "x^" << i;
-            else cout << poly[i];
+            if (i != 0) 
+            cout << poly[i] << "x^" << i;
+            else 
+            cout << poly[i];
          }         
     }
     cout <<endl;
 }
 
+//additon of Polynomials
 void addPolynomials(double* poly1, double* poly2, int degree){
     for (int i = 0; i <= degree; i++){
         poly1[i] += poly2[i];
     }
 }
 
+//Subtraction of polynomials
 void subtractPolynomials(double* poly1, double* poly2,int degree){
     for (int i = 0; i <= degree; i++){
         poly1[i] -= poly2[i];
     }
 }
 
-void multiplyPolynomials(double* poly1, double* poly2, int degree){
+//Multipliying Polynomials
+void multiplyPolynomials(double* poly1, double* poly2, int degree){                     
     double result[2* 3 +1] = {0.0};
 
     for (int i = 0; i <= degree; i++){
@@ -70,6 +76,7 @@ void multiplyPolynomials(double* poly1, double* poly2, int degree){
     }
 }
 
+//This is the menu for the Polynomial Equations Part
 void polynomMenu(){
     cout<< "\n      MENU    \n";
     cout<< "1. Additon\n";
@@ -77,6 +84,10 @@ void polynomMenu(){
     cout<< "3. Multiplication\n";
     cout<<"Enter ur choice: ";
 
+    int degree; 
+    cout << "Enter the degree of the polynomials: ";
+    cin >> degree;
+   
     int choice;
     cin>> choice;
     if(!cin){
@@ -85,7 +96,6 @@ void polynomMenu(){
             polynomMenu();
     }
 
-   int degree = 3;
    double poly1[degree + 1];
    double poly2[degree + 1];
 
@@ -114,7 +124,7 @@ void polynomMenu(){
         case 3:
             multiplyPolynomials(poly1, poly2, degree);
             cout <<"Result of multiplication: ";
-            printPolynomial(poly1, degree);
+            printPolynomial(poly1, 2 * degree);
             break;
         default:
         cout <<"No sorry that wasnt one of your options try again!\n"; 
@@ -125,7 +135,7 @@ void polynomMenu(){
     }
 }
 
-
+//This is the code for doing simpleMath
     void simplemath(){
         char op;
         float num1, num2;
@@ -163,7 +173,8 @@ void polynomMenu(){
     }
 } 
 } 
-//void? or int?
+
+//This my main menu for the Calculator
 int main(){                                                     
     
      while (true){
